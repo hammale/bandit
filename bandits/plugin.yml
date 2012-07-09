@@ -1,0 +1,8 @@
+name: Bandits
+version: 1.0
+author: hammale
+main: me.hammale.bandit.bandit
+commands:
+  bandit:
+    description: Create bandit's
+    usage: |
