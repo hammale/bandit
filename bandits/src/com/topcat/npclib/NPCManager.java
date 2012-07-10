@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import me.hammale.bandit.bandit;
 import net.minecraft.server.Entity;
 import net.minecraft.server.ItemInWorldManager;
 import net.minecraft.server.WorldServer;
@@ -103,17 +104,17 @@ public class NPCManager {
 		}
 	}
 
-	public NPC spawnHumanNPC(String name, Location l) {
+	public NPC spawnHumanNPC(bandit plugin, String name, Location l) {
 		int i = 0;
 		String id = name;
 		while (npcs.containsKey(id)) {
 			id = name + i;
 			i++;
 		}
-		return spawnHumanNPC(name, l, id);
+		return spawnHumanNPC(plugin, name, l, id);
 	}
 
-	public NPC spawnHumanNPC(String name, Location l, String id) {
+	public NPC spawnHumanNPC(bandit plugin, String name, Location l, String id) {
 		if (npcs.containsKey(id)) {
 			server.getLogger().log(Level.WARNING, "NPC with that id already exists, existing NPC returned");
 			return npcs.get(id);
@@ -128,7 +129,7 @@ public class NPCManager {
 			NPCEntity npcEntity = new NPCEntity(this, world, name, new ItemInWorldManager(world.getWorldServer()));
 			npcEntity.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
 			world.getWorldServer().addEntity(npcEntity); //the right way
-			NPC npc = new HumanNPC(npcEntity);
+			NPC npc = new HumanNPC(npcEntity, plugin, l);
 			npcs.put(id, npc);
 			return npc;
 		}

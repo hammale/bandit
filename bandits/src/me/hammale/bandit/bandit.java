@@ -50,15 +50,12 @@ public class bandit extends JavaPlugin {
 			if(cmd.getName().equalsIgnoreCase("bandit")){
 				if(args.length > 0){
 					if(args[0].equalsIgnoreCase("create")){
-						HumanNPC tmp = (HumanNPC) this.manager.spawnHumanNPC("bandit", p.getLocation());
+						HumanNPC tmp = (HumanNPC) this.manager.spawnHumanNPC(this, "bandit", p.getLocation());
 						if(ran.nextInt(2) == 0){
 							tmp.setItemInHand(Material.WOOD_SWORD);
 						}else{
 							tmp.setItemInHand(Material.STONE_SWORD);
 						}
-						tmp.setPlugin(this);
-						tmp.startTimer();
-						tmp.setHome(p.getLocation());
 						this.npcs.add(tmp);
 						p.sendMessage(ChatColor.GREEN + "Bandit created!");
 					}

@@ -1,6 +1,7 @@
 package com.topcat.npclib.entity;
 
 import me.hammale.bandit.bandit;
+import net.minecraft.server.Entity;
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet18ArmAnimation;
 import net.minecraft.server.WorldServer;
@@ -20,24 +21,18 @@ public class HumanNPC extends NPC {
 	public Location home;
 	bandit plugin;
 	
-	public Location getHome(){
-		return this.home;
-	}
-	
-	public void setPlugin(bandit plugin){
+	public HumanNPC(Entity entity, bandit plugin, Location home){
+		super(entity);
 		this.plugin = plugin;
-	}
-	
-	public void startTimer(){
-		plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
-			   public void run() {
-			       moveTo(home);
-			   }
-		}, 8400L, 8400L);
+		this.home = home;
 	}
 	
 	public void setHome(Location home){
 		this.home = home;
+	}
+	
+	public Location getHome(){
+		return this.home;
 	}
 	
 	public void setTarget(String target){
@@ -46,10 +41,6 @@ public class HumanNPC extends NPC {
 	
 	public String getTarget(){
 		return this.target;
-	}
-	
-	public HumanNPC(NPCEntity npcEntity) {
-		super(npcEntity);
 	}
 
 	public void animateArmSwing() {
