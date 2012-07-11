@@ -36,12 +36,11 @@ public class bandit extends JavaPlugin {
         bandit.plugin = this;
         this.manager = new NPCManager(this);
 		getServer().getPluginManager().registerEvents(new banditPlayer(this), this);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this,new banditTask(this),0,5);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this,new banditTask(this),0,1);
     }     
     @Override
     public void onDisable() {
     	log.info("[Bandits] Made by hammale the great disabled!");
-    	
     }
     
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

@@ -19,16 +19,30 @@ public class banditTask implements Runnable {
 	
 	public void run() {
 		for(HumanNPC npc : plugin.npcs){
-			for(Player p : plugin.getServer().getOnlinePlayers()){
-				if(p.getLocation().distance(((LivingEntity) npc.getBukkitEntity()).getLocation()) <= 25 
-						&& p.getGameMode() == GameMode.SURVIVAL
-						&& p.getLocation().distance(npc.getHome()) <= 50
-						&& ((LivingEntity) npc.getBukkitEntity()).getLocation().distance(npc.getHome()) <= 50){
-					npc.setTarget(p.getName());
-				}else{
-					npc.setTarget(null);
+			boolean targetSet = false;
+			if(npc.getTarget() != null
+					&& plugin.getServer().getPlayer(npc.getTarget()) != null
+					&& plugin.getServer().getPlayer(npc.getTarget()).getLocation().distance(((LivingEntity) npc.getBukkitEntity()).getLocation()) <= 25 
+					&& plugin.getServer().getPlayer(npc.getTarget()).getGameMode() == GameMode.SURVIVAL
+					&& plugin.getServer().getPlayer(npc.getTarget()).getLocation().distance(npc.getHome()) <= 50
+					&& plugin.getServer().getPlayer(npc.getTarget()) == null
+					&& ((LivingEntity) npc.getBukkitEntity()).getLocation().distance(npc.getHome()) <= 50){
+				npc.setTarget(plugin.getServer().getPlayer(npc.getTarget()).getName());
+				targetSet = true;
+			}
+			if(!targetSet){
+				for(Player p : plugin.getServer().getOnlinePlayers()){
+					if(p.getLocation().distance(((LivingEntity) npc.getBukkitEntity()).getLocation()) <= 25 
+							&& p.getGameMode() == GameMode.SURVIVAL
+							&& p.getLocation().distance(npc.getHome()) <= 50
+							&& ((LivingEntity) npc.getBukkitEntity()).getLocation().distance(npc.getHome()) <= 50){
+						npc.setTarget(p.getName());				
+					}else{			
+						npc.setTarget(null);
+					}
 				}
 			}
+			
 			for(int i = 1;npc.getBukkitEntity().getLocation().getBlock().getRelative(BlockFace.DOWN, i).getType() == Material.AIR;i++){
 				npc.getBukkitEntity().teleport(new Location(npc.getBukkitEntity().getWorld(), npc.getBukkitEntity().getLocation().getX(), npc.getBukkitEntity().getLocation().getY()-1, npc.getBukkitEntity().getLocation().getZ()));
 			}

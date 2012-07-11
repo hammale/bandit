@@ -37,7 +37,8 @@ public class banditPlayer implements Listener {
 						}
 						plugin.npcs.add(tmp);
 				   }
-			}, 8400L);
+			}, 600L);
+			//TODO 8400
 		}
 	}
 	
